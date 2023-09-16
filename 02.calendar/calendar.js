@@ -4,6 +4,19 @@ import minimist from "minimist";
 
 const CALENDAR_ROWS = 6;
 
+const main = () => {
+  const args = minimist(process.argv.slice(2));
+  let year = args.y;
+  let month = args.m;
+  const now = new Date();
+  if (year === undefined || month === undefined) {
+    year = now.getFullYear();
+    month = now.getMonth() + 1;
+  }
+
+  process.stdout.write(generateCalendar(year, month));
+};
+
 export const generateCalendar = (year, month) => {
   const weeks = new Array(CALENDAR_ROWS).fill("");
   let weekIndex = 0;
@@ -37,13 +50,4 @@ const generateDatesOfMonth = (year, month) => {
   );
 };
 
-const args = minimist(process.argv.slice(2));
-let year = args.y;
-let month = args.m;
-const now = new Date();
-if (year === undefined || month === undefined) {
-  year = now.getFullYear();
-  month = now.getMonth() + 1;
-}
-
-process.stdout.write(generateCalendar(year, month));
+main();
