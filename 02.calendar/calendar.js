@@ -36,11 +36,7 @@ export const generateCalendar = (year, month) => {
 
 const generateBlankOfFirstWeek = (year, month) => {
   const firstDayOfWeek = new Date(year, month - 1, 1).getDay();
-  let blanks = "";
-  for (const blank of new Array(firstDayOfWeek).fill("   ")) {
-    blanks += blank;
-  }
-  return blanks;
+  return new Array(firstDayOfWeek).fill("   ").join("");
 };
 
 const generateDatesOfMonth = (year, month) => {
