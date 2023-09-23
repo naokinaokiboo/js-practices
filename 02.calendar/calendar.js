@@ -6,15 +6,37 @@ const CALENDAR_ROWS = 6;
 
 const main = () => {
   const args = minimist(process.argv.slice(2));
-  let year = args.y;
-  let month = args.m;
+  const [year, month] = decideDispYearMonth(args.y, args.m);
+  process.stdout.write(generateCalendar(year, month));
+};
+
+export const decideDispYearMonth = (year, month) => {
   const now = new Date();
-  if (year === undefined || month === undefined) {
+
+  if (year === undefined) {
     year = now.getFullYear();
+  }
+  if (month === undefined) {
     month = now.getMonth() + 1;
   }
 
-  process.stdout.write(generateCalendar(year, month));
+  try {
+    if (!isWithinRange(year, 1, 9999)) {
+      throw new Error(`cal: year '${year}' not in range 1..9999`);
+    }
+    if (!isWithinRange(month, 1, 12)) {
+      throw new Error(`cal: ${month} is not a month number (1..12)`);
+    }
+  } catch (err) {
+    console.error(err.message);
+    process.exit(1);
+  }
+
+  return [year, month];
+};
+
+const isWithinRange = (num, min, max) => {
+  return min <= num && num <= max;
 };
 
 export const generateCalendar = (year, month) => {

@@ -1,5 +1,32 @@
 import * as Calendar from "../calendar";
 
+describe("表示するカレンダーの年月のテスト", () => {
+  test("指定した年月をカレンダーの表示年月とする", () => {
+    const response = Calendar.decideDispYearMonth(1970, 1);
+    const expectYearMonth = [1970, 1];
+    expect(response).toEqual(expectYearMonth);
+  });
+
+  test("月が未指定の場合は、現在の月を表示月とする", () => {
+    const response = Calendar.decideDispYearMonth(2100, undefined);
+    const expectYearMonth = [2100, new Date().getMonth() + 1];
+    expect(response).toEqual(expectYearMonth);
+  });
+
+  test("年が未指定の場合は、現在の年を表示年とする", () => {
+    const response = Calendar.decideDispYearMonth(undefined, 12);
+    const expectYearMonth = [new Date().getFullYear(), 12];
+    expect(response).toEqual(expectYearMonth);
+  });
+
+  test("年、月共に未指定の場合は、現在の年月を表示年月とする", () => {
+    const response = Calendar.decideDispYearMonth(undefined, undefined);
+    const now = new Date();
+    const expectYearMonth = [now.getFullYear(), now.getMonth() + 1];
+    expect(response).toEqual(expectYearMonth);
+  });
+});
+
 describe("カレンダー表示のテスト", () => {
   test("1970_01", () => {
     const response = Calendar.generateCalendar(1970, 1);
