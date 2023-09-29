@@ -8,10 +8,10 @@ const dropBooksTable = "DROP TABLE books;";
 
 const db = new sqlite3.Database(":memory:");
 
-db.run(createBooksTable, function () {
+db.run(createBooksTable, () => {
   db.run(insertBook, "JavaScript Primer", function () {
     console.log(`自動採番されたID:${this.lastID}`);
-    db.get(selectBook, this.lastID, function (_err, row) {
+    db.get(selectBook, this.lastID, (_err, row) => {
       console.log(row);
       db.run(dropBooksTable);
     });

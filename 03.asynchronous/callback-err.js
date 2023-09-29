@@ -8,12 +8,12 @@ const dropBooksTable = "DROP TABLE books;";
 
 const db = new sqlite3.Database(":memory:");
 
-db.run(createBooksTable, function () {
-  db.run(insertBookErr, "JavaScript Primer", function (err) {
+db.run(createBooksTable, () => {
+  db.run(insertBookErr, "JavaScript Primer", (err) => {
     if (err) {
       console.error(err.message);
     }
-    db.get(selectBookErr, 1, function (err) {
+    db.get(selectBookErr, 1, (err) => {
       if (err) {
         console.error(err.message);
       }
