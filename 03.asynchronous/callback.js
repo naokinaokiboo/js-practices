@@ -1,19 +1,14 @@
 import sqlite3 from "sqlite3";
-
-const createBooksTable =
-  "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE);";
-const insertBook = "INSERT INTO books(title) values(?);";
-const selectBook = "SELECT * FROM books WHERE id = ?;";
-const dropBooksTable = "DROP TABLE books;";
+import * as commonSQL from "./common-sql.js";
 
 const db = new sqlite3.Database(":memory:");
 
-db.run(createBooksTable, () => {
-  db.run(insertBook, "JavaScript Primer", function () {
+db.run(commonSQL.createBooksTable, () => {
+  db.run(commonSQL.insertBook, "JavaScript Primer", function () {
     console.log(`自動採番されたID:${this.lastID}`);
-    db.get(selectBook, this.lastID, (_err, row) => {
+    db.get(commonSQL.selectBook, this.lastID, (_err, row) => {
       console.log(row);
-      db.run(dropBooksTable);
+      db.run(commonSQL.dropBooksTable);
     });
   });
 });

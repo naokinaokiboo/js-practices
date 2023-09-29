@@ -1,29 +1,26 @@
 import sqlite3 from "sqlite3";
+import * as commonSQL from "./common-sql.js";
 import * as promiseLib from "./promise-func.js";
-
-const createBooksTable =
-  "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE);";
-const insertBookErr = "INSERT INTO books(noExistsColumn) values(?);";
-const selectBookErr = "SELECT * FROM noExistsTable WHERE id = ?;";
-const dropBooksTable = "DROP TABLE books;";
 
 const main = async () => {
   const db = new sqlite3.Database(":memory:");
 
-  await promiseLib.runPromise(db, createBooksTable);
+  await promiseLib.runPromise(db, commonSQL.createBooksTable);
   try {
-    await promiseLib.runPromise(db, insertBookErr, ["JavaScript Primer"]);
+    await promiseLib.runPromise(db, commonSQL.insertBookErr, [
+      "JavaScript Primer",
+    ]);
   } catch (err) {
     console.error(err.message);
   }
 
   try {
-    await promiseLib.getPromise(db, selectBookErr, [1]);
+    await promiseLib.getPromise(db, commonSQL.selectBookErr, [1]);
   } catch (err) {
     console.error(err.message);
   }
 
-  await promiseLib.getPromise(db, dropBooksTable);
+  await promiseLib.getPromise(db, commonSQL.dropBooksTable);
 };
 
 main();
