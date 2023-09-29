@@ -11,9 +11,7 @@ const db = new sqlite3.Database(":memory:");
 
 promiseLib
   .runPromise(db, createBooksTable)
-  .then(() => {
-    return promiseLib.runPromise(db, insertBookErr, ["JavaScript Primer"]);
-  })
+  .then(() => promiseLib.runPromise(db, insertBookErr, ["JavaScript Primer"]))
   .catch((err) => {
     console.error(err.message);
     return promiseLib.getPromise(db, selectBookErr, [1]);

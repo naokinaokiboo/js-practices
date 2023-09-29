@@ -11,9 +11,7 @@ const db = new sqlite3.Database(":memory:");
 
 promiseLib
   .runPromise(db, createBooksTable)
-  .then(() => {
-    return promiseLib.runPromise(db, insertBook, ["JavaScript Primer"]);
-  })
+  .then(() => promiseLib.runPromise(db, insertBook, ["JavaScript Primer"]))
   .then((result) => {
     console.log(`自動採番されたID:${result.lastID}`);
     return promiseLib.getPromise(db, selectBook, [result.lastID]);
