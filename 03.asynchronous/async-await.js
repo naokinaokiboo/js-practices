@@ -11,12 +11,12 @@ const main = async () => {
   const db = new sqlite3.Database(":memory:");
 
   await promiseLib.runPromise(db, createBooksTable);
-  let result = await promiseLib.runPromise(db, insertBook, [
+  const result = await promiseLib.runPromise(db, insertBook, [
     "JavaScript Primer",
   ]);
   console.log(`自動採番されたID:${result.lastID}`);
 
-  let resultRow = await promiseLib.getPromise(db, selectBook, [1]);
+  const resultRow = await promiseLib.getPromise(db, selectBook, [1]);
   console.log(resultRow);
   await promiseLib.getPromise(db, dropBooksTable);
 };
