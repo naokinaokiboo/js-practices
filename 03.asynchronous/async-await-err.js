@@ -7,15 +7,17 @@ const main = async () => {
 
   await promiseLib.runPromise(db, commonSQL.createBooksTable);
   try {
-    await promiseLib.runPromise(db, commonSQL.insertBookErr, [
-      "JavaScript Primer",
-    ]);
+    await promiseLib.runPromise(
+      db,
+      commonSQL.insertBookErr,
+      "JavaScript Primer"
+    );
   } catch (err) {
     console.error(err.message);
   }
 
   try {
-    await promiseLib.getPromise(db, commonSQL.selectBookErr, [1]);
+    await promiseLib.getPromise(db, commonSQL.selectBookErr, 1);
   } catch (err) {
     console.error(err.message);
   }

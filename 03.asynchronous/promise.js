@@ -7,11 +7,11 @@ const db = new sqlite3.Database(":memory:");
 promiseLib
   .runPromise(db, commonSQL.createBooksTable)
   .then(() =>
-    promiseLib.runPromise(db, commonSQL.insertBook, ["JavaScript Primer"])
+    promiseLib.runPromise(db, commonSQL.insertBook, "JavaScript Primer")
   )
   .then((result) => {
     console.log(`自動採番されたID:${result.lastID}`);
-    return promiseLib.getPromise(db, commonSQL.selectBook, [result.lastID]);
+    return promiseLib.getPromise(db, commonSQL.selectBook, result.lastID);
   })
   .then((result) => {
     console.log(result);

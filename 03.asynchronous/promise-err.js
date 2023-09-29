@@ -7,11 +7,11 @@ const db = new sqlite3.Database(":memory:");
 promiseLib
   .runPromise(db, commonSQL.createBooksTable)
   .then(() =>
-    promiseLib.runPromise(db, commonSQL.insertBookErr, ["JavaScript Primer"])
+    promiseLib.runPromise(db, commonSQL.insertBookErr, "JavaScript Primer")
   )
   .catch((err) => {
     console.error(err.message);
-    return promiseLib.getPromise(db, commonSQL.selectBookErr, [1]);
+    return promiseLib.getPromise(db, commonSQL.selectBookErr, 1);
   })
   .catch((err) => {
     console.error(err.message);
