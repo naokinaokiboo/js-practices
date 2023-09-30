@@ -1,5 +1,6 @@
 import sqlite3 from "sqlite3";
 import * as commonSQL from "./common-sql.js";
+import * as commonErr from "./common-err.js";
 import * as promiseLib from "./promise-func.js";
 
 const main = async () => {
@@ -13,13 +14,13 @@ const main = async () => {
       "JavaScript Primer"
     );
   } catch (err) {
-    console.error(err.message);
+    commonErr.handleError(err);
   }
 
   try {
     await promiseLib.getPromise(db, commonSQL.selectBookErr, 1);
   } catch (err) {
-    console.error(err.message);
+    commonErr.handleError(err);
   }
 
   await promiseLib.getPromise(db, commonSQL.dropBooksTable);
