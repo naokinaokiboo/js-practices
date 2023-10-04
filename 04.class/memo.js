@@ -1,6 +1,6 @@
 export class Memo {
   static all(adapter) {
-    // TODO:DBから一覧を取得
+    return adapter.all("SELECT * FROM memos ORDER BY id ASC");
   }
 
   static destroy(adapter, id) {

@@ -23,13 +23,20 @@ const prepareDB = (adapter) => {
 const receiveCommand = async (adapter) => {
   const args = minimist(process.argv.slice(2));
   if (args.l) {
-    // TODO:メモ一覧表示
+    return showAllTitles(adapter);
   } else if (args.r) {
     // TODO:全文表示
   } else if (args.d) {
     // TODO:メモ削除
   } else {
     return saveMemo(adapter);
+  }
+};
+
+const showAllTitles = async (adapter) => {
+  const memos = await Memo.all(adapter);
+  for (const memo of memos) {
+    console.log(memo["title"]);
   }
 };
 
