@@ -15,7 +15,7 @@ const main = async () => {
 
   const resultRow = await promiseLib.getPromise(db, commonSQL.selectBook, 1);
   console.log(resultRow);
-  await promiseLib.getPromise(db, commonSQL.dropBooksTable);
+  await promiseLib.runPromise(db, commonSQL.dropBooksTable);
 };
 
 main();

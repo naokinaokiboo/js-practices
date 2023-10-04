@@ -15,5 +15,5 @@ promiseLib
   })
   .then((result) => {
     console.log(result);
-    promiseLib.getPromise(db, commonSQL.dropBooksTable);
+    promiseLib.runPromise(db, commonSQL.dropBooksTable);
   });

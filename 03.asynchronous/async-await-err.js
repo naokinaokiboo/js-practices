@@ -18,12 +18,12 @@ const main = async () => {
   }
 
   try {
-    await promiseLib.getPromise(db, commonSQL.selectBookErr, 1);
+    await promiseLib.runPromise(db, commonSQL.selectBookErr, 1);
   } catch (err) {
     commonErr.handleError(err);
   }
 
-  await promiseLib.getPromise(db, commonSQL.dropBooksTable);
+  await promiseLib.runPromise(db, commonSQL.dropBooksTable);
 };
 
 main();

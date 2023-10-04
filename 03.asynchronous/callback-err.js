@@ -9,7 +9,7 @@ db.run(commonSQL.createBooksTable, () => {
     if (err) {
       commonErr.handleError(err);
     }
-    db.get(commonSQL.selectBookErr, 1, (err) => {
+    db.run(commonSQL.selectBookErr, 1, (err) => {
       if (err) {
         commonErr.handleError(err);
       }
