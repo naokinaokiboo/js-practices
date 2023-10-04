@@ -12,7 +12,7 @@ promiseLib
   )
   .catch((err) => {
     commonErr.handleError(err);
-    return promiseLib.runPromise(db, commonSQL.selectBookErr, 1);
+    return promiseLib.getPromise(db, commonSQL.selectBookErr, 1);
   })
   .catch((err) => {
     commonErr.handleError(err);

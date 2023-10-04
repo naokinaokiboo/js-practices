@@ -18,7 +18,7 @@ const main = async () => {
   }
 
   try {
-    await promiseLib.runPromise(db, commonSQL.selectBookErr, 1);
+    await promiseLib.getPromise(db, commonSQL.selectBookErr, 1);
   } catch (err) {
     commonErr.handleError(err);
   }
