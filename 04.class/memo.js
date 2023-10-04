@@ -16,6 +16,10 @@ export class Memo {
   }
 
   save(adapter) {
-    // TODO:DBに保存
+    return adapter.run(
+      "INSERT INTO memos(title, content) VALUES(?, ?)",
+      this.#title,
+      this.#content
+    );
   }
 }
