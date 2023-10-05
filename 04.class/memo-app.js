@@ -91,23 +91,27 @@ class MemoApp {
   }
 
   async #showMemo() {
-    const selectedMemo = await this.#selectMemo();
+    const selectedMemo = await this.#selectMemo(
+      "Select the memo you want to display."
+    );
     console.log(selectedMemo["title"]);
     console.log(selectedMemo["content"]);
   }
 
   async #deleteMemo() {
-    const selectedMemo = await this.#selectMemo();
+    const selectedMemo = await this.#selectMemo(
+      "Select the memo you want to delete."
+    );
     return Memo.destroy(this.#adapter, selectedMemo["id"]);
   }
 
-  async #selectMemo() {
+  async #selectMemo(msg) {
     const memos = await Memo.all(this.#adapter);
     const questions = [
       {
         type: "select",
         name: "value",
-        message: "Select the memo you want to display.",
+        message: msg,
         choices: memos.map((memo) => {
           return {
             name: memo.title,
