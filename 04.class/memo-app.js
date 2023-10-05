@@ -10,6 +10,12 @@ const main = async () => {
   try {
     await prepareDB(adapter);
     await receiveCommand(adapter);
+  } catch (err) {
+    if (err instanceof Error) {
+      console.error(err.message);
+    } else {
+      throw err;
+    }
   } finally {
     await adapter.close();
   }
