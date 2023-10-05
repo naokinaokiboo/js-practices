@@ -105,7 +105,9 @@ class MemoApp {
     const selectedMemo = await this.#selectMemo(
       "Select the memo you want to delete."
     );
-    return Memo.destroy(this.#adapter, selectedMemo["id"]);
+    return Memo.destroy(this.#adapter, selectedMemo["id"]).then(() =>
+      console.log("The memo was successfully deleted.")
+    );
   }
 
   async #selectMemo(msg) {
