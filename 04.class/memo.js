@@ -7,6 +7,11 @@ export class Memo {
     return adapter.run("DELETE FROM memos WHERE id = ?", id);
   }
 
+  static async count(adapter) {
+    const result = await adapter.get("SELECT COUNT(*) FROM memos");
+    return result["COUNT(*)"];
+  }
+
   #title;
   #content;
 

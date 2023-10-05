@@ -29,14 +29,22 @@ const prepareDB = (adapter) => {
 
 const receiveCommand = async (adapter) => {
   const args = minimist(process.argv.slice(2));
+  if (!args.l && !args.r && !args.d) {
+    return saveMemo(adapter);
+  }
+
+  const numOfMemos = await Memo.count(adapter);
+  if (numOfMemos === 0) {
+    console.log("No notes have been registered.");
+    return;
+  }
+
   if (args.l) {
     return showAllTitles(adapter);
   } else if (args.r) {
     return showMemo(adapter);
   } else if (args.d) {
     return deleteMemo(adapter);
-  } else {
-    return saveMemo(adapter);
   }
 };
 
