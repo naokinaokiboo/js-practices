@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 import * as readline from "readline";
 import minimist from "minimist";
+import enquirer from "enquirer";
 import { Memo } from "./memo.js";
 import { SQLiteAdapter } from "./SQLiteAdapter.js";
 
@@ -25,12 +26,38 @@ const receiveCommand = async (adapter) => {
   if (args.l) {
     return showAllTitles(adapter);
   } else if (args.r) {
-    // TODO:全文表示
+    return showMemo(adapter);
   } else if (args.d) {
     // TODO:メモ削除
   } else {
     return saveMemo(adapter);
   }
+};
+
+const showMemo = async (adapter) => {
+  const memos = await Memo.all(adapter);
+  const questions = [
+    {
+      type: "select",
+      name: "value",
+      message: "Select the memo you want to display.",
+      choices: memos.map((memo) => {
+        return {
+          name: memo.title,
+          message: memo.title,
+          value: { title: memo.title, content: memo.content },
+        };
+      }),
+      result() {
+        return this.focused.value;
+      },
+    },
+  ];
+
+  const answer = await enquirer.prompt(questions);
+  const selectedMemo = answer["value"];
+  console.log(selectedMemo["title"]);
+  console.log(selectedMemo["content"]);
 };
 
 const showAllTitles = async (adapter) => {
