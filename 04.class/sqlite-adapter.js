@@ -13,6 +13,7 @@ export class SQLiteAdapter {
         if (err) {
           reject(err);
         } else {
+          console.log("!!! run() is finished !!!");
           resolve(this);
         }
       });
@@ -37,6 +38,7 @@ export class SQLiteAdapter {
         if (err) {
           reject(err);
         } else {
+          console.log("!!! all() is finished !!!");
           resolve(rows);
         }
       });
@@ -49,6 +51,7 @@ export class SQLiteAdapter {
         if (err) {
           reject(err);
         } else {
+          console.log("!!! close() is finished !!!");
           resolve();
         }
       });

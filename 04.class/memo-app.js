@@ -3,7 +3,7 @@ import * as readline from "readline";
 import minimist from "minimist";
 import enquirer from "enquirer";
 import { Memo } from "./memo.js";
-import { SQLiteAdapter } from "./SQLiteAdapter.js";
+import { SQLiteAdapter } from "./sqlite-adapter.js";
 
 const main = async () => {
   const adapter = new SQLiteAdapter();
