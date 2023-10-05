@@ -4,7 +4,7 @@ export class Memo {
   }
 
   static destroy(adapter, id) {
-    // TODO:DBから削除
+    return adapter.run("DELETE FROM memos WHERE id = ?", id);
   }
 
   #title;

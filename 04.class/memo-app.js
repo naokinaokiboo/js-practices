@@ -28,13 +28,31 @@ const receiveCommand = async (adapter) => {
   } else if (args.r) {
     return showMemo(adapter);
   } else if (args.d) {
-    // TODO:メモ削除
+    return deleteMemo(adapter);
   } else {
     return saveMemo(adapter);
   }
 };
 
 const showMemo = async (adapter) => {
+  const selectedMemo = await selectMemo(adapter);
+  console.log(selectedMemo["title"]);
+  console.log(selectedMemo["content"]);
+};
+
+const showAllTitles = async (adapter) => {
+  const memos = await Memo.all(adapter);
+  for (const memo of memos) {
+    console.log(memo["title"]);
+  }
+};
+
+const deleteMemo = async (adapter) => {
+  const selectedMemo = await selectMemo(adapter);
+  return Memo.destroy(adapter, selectedMemo["id"]);
+};
+
+const selectMemo = async (adapter) => {
   const memos = await Memo.all(adapter);
   const questions = [
     {
@@ -45,7 +63,7 @@ const showMemo = async (adapter) => {
         return {
           name: memo.title,
           message: memo.title,
-          value: { title: memo.title, content: memo.content },
+          value: { id: memo.id, title: memo.title, content: memo.content },
         };
       }),
       result() {
@@ -55,16 +73,7 @@ const showMemo = async (adapter) => {
   ];
 
   const answer = await enquirer.prompt(questions);
-  const selectedMemo = answer["value"];
-  console.log(selectedMemo["title"]);
-  console.log(selectedMemo["content"]);
-};
-
-const showAllTitles = async (adapter) => {
-  const memos = await Memo.all(adapter);
-  for (const memo of memos) {
-    console.log(memo["title"]);
-  }
+  return answer["value"];
 };
 
 const saveMemo = async (adapter) => {
