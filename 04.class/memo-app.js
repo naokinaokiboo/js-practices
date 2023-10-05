@@ -64,10 +64,13 @@ class MemoApp {
   async #saveMemo() {
     const lines = await this.#readlinePromise();
     const memo = new Memo(lines[0], lines.slice(1).join("\n"));
-    return memo.save(this.#adapter);
+    return memo
+      .save(this.#adapter)
+      .then(() => console.log("The memo was successfully saved."));
   }
 
   #readlinePromise() {
+    console.log("Enter your memo. (Press Ctrl+D to finish typing).");
     const reader = readline.createInterface({
       input: process.stdin,
     });
