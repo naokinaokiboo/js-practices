@@ -45,7 +45,7 @@ export default class MemoApp {
 
     const numOfMemos = await Memo.count(this.#adapter);
     if (numOfMemos === 0) {
-      console.log("No notes have been registered.");
+      console.log("No memos have been registered.");
       return;
     }
 
