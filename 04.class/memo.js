@@ -37,9 +37,9 @@ export default class Memo {
   #title;
   #content;
 
-  constructor(title, content) {
-    this.#title = title;
-    this.#content = content;
+  constructor(lines) {
+    this.#title = lines[0];
+    this.#content = lines.slice(1).join("\n");
   }
 
   save() {

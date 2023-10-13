@@ -57,7 +57,7 @@ export default class MemoApp {
 
   async #saveMemo() {
     const lines = await this.#readlinePromise();
-    const memo = new Memo(lines[0], lines.slice(1).join("\n"));
+    const memo = new Memo(lines);
     return memo
       .save()
       .then(() => console.log("The memo was successfully saved."));
