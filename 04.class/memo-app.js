@@ -109,25 +109,23 @@ export default class MemoApp {
 
   async #selectMemo(msg) {
     const memos = await Memo.all(this.#adapter);
-    const questions = [
-      {
-        type: "select",
-        name: "value",
-        message: msg,
-        choices: memos.map((memo) => {
-          return {
-            name: memo.title,
-            message: memo.title,
-            value: { id: memo.id, title: memo.title, content: memo.content },
-          };
-        }),
-        result() {
-          return this.focused.value;
-        },
+    const question = {
+      type: "select",
+      name: "value",
+      message: msg,
+      choices: memos.map((memo) => {
+        return {
+          name: memo.title,
+          message: memo.title,
+          value: { id: memo.id, title: memo.title, content: memo.content },
+        };
+      }),
+      result() {
+        return this.focused.value;
       },
-    ];
+    };
 
-    const answer = await enquirer.prompt(questions);
+    const answer = await enquirer.prompt(question);
     return answer["value"];
   }
 }
