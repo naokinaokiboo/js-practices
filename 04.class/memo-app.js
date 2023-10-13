@@ -5,7 +5,7 @@ import enquirer from "enquirer";
 import { Memo } from "./memo.js";
 import { SQLiteAdapter } from "./sqlite-adapter.js";
 
-class MemoApp {
+export default class MemoApp {
   #adapter;
   #optList;
   #optReference;
@@ -134,6 +134,3 @@ class MemoApp {
     return answer["value"];
   }
 }
-
-const memoApp = new MemoApp();
-memoApp.execute();
