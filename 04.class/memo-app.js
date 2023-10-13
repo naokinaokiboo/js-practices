@@ -7,16 +7,16 @@ import { SQLiteAdapter } from "./sqlite-adapter.js";
 
 export default class MemoApp {
   #adapter;
-  #optList;
-  #optReference;
-  #optDelete;
+  #optionList;
+  #optionReference;
+  #optionDelete;
 
   constructor() {
     this.#adapter = new SQLiteAdapter();
     const args = minimist(process.argv.slice(2));
-    this.#optList = args.l;
-    this.#optReference = args.r;
-    this.#optDelete = args.d;
+    this.#optionList = args.l;
+    this.#optionReference = args.r;
+    this.#optionDelete = args.d;
   }
 
   async execute() {
@@ -42,7 +42,7 @@ export default class MemoApp {
 
   async #executeCommand() {
     const args = minimist(process.argv.slice(2));
-    if (!this.#optList && !this.#optReference && !this.#optDelete) {
+    if (!this.#optionList && !this.#optionReference && !this.#optionDelete) {
       return this.#saveMemo();
     }
 
