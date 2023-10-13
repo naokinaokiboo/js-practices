@@ -47,9 +47,9 @@ export default class MemoApp {
     }
 
     if (this.#optionList) {
-      return this.#showAllTitles();
+      return this.#showTitleList();
     } else if (this.#optionReference) {
-      return this.#showMemo();
+      return this.#referenceMemo();
     } else if (this.#optionDelete) {
       return this.#deleteMemo();
     }
@@ -80,14 +80,14 @@ export default class MemoApp {
     });
   }
 
-  async #showAllTitles() {
+  async #showTitleList() {
     const memos = await Memo.all();
     for (const memo of memos) {
       console.log(memo["title"]);
     }
   }
 
-  async #showMemo() {
+  async #referenceMemo() {
     const selectedMemo = await this.#selectMemo(
       "Select the memo you want to display."
     );
