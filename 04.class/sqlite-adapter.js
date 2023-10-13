@@ -1,6 +1,6 @@
 import sqlite3 from "sqlite3";
 
-export class SQLiteAdapter {
+export default class SQLiteAdapter {
   #db;
 
   constructor() {

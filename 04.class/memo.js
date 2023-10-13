@@ -1,4 +1,4 @@
-export class Memo {
+export default class Memo {
   static createTable(adapter) {
     return adapter.run(
       "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, content TEXT NOT NULL)"

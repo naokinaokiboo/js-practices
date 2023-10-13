@@ -2,8 +2,8 @@
 import readline from "readline";
 import minimist from "minimist";
 import enquirer from "enquirer";
-import { Memo } from "./memo.js";
-import { SQLiteAdapter } from "./sqlite-adapter.js";
+import Memo from "./memo.js";
+import SQLiteAdapter from "./sqlite-adapter.js";
 
 export default class MemoApp {
   #adapter;
