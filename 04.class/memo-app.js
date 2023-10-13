@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-import * as readline from "readline";
+import readline from "readline";
 import minimist from "minimist";
 import enquirer from "enquirer";
 import { Memo } from "./memo.js";
