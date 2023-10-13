@@ -35,9 +35,7 @@ export default class MemoApp {
   }
 
   #prepareDB() {
-    return this.#adapter.run(
-      "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, content TEXT NOT NULL)"
-    );
+    Memo.createTable;
   }
 
   async #executeCommand() {

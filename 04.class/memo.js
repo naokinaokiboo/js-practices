@@ -1,4 +1,9 @@
 export class Memo {
+  static createTable(adapter) {
+    return adapter.run(
+      "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, content TEXT NOT NULL)"
+    );
+  }
   static all(adapter) {
     return adapter.all("SELECT * FROM memos ORDER BY id ASC");
   }
