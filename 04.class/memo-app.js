@@ -39,7 +39,6 @@ export default class MemoApp {
   }
 
   async #executeCommand() {
-    const args = minimist(process.argv.slice(2));
     if (!this.#optionList && !this.#optionReference && !this.#optionDelete) {
       return this.#saveMemo();
     }
@@ -50,11 +49,11 @@ export default class MemoApp {
       return;
     }
 
-    if (args.l) {
+    if (this.#optionList) {
       return this.#showAllTitles();
-    } else if (args.r) {
+    } else if (this.#optionReference) {
       return this.#showMemo();
-    } else if (args.d) {
+    } else if (this.#optionDelete) {
       return this.#deleteMemo();
     }
   }
