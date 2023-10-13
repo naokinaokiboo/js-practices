@@ -83,7 +83,7 @@ export default class MemoApp {
   async #showTitleList() {
     const memos = await Memo.all();
     for (const memo of memos) {
-      console.log(memo["title"]);
+      console.log(memo.title);
     }
   }
 
@@ -91,15 +91,15 @@ export default class MemoApp {
     const selectedMemo = await this.#selectMemo(
       "Select the memo you want to display."
     );
-    console.log(selectedMemo["title"]);
-    console.log(selectedMemo["content"]);
+    console.log(selectedMemo.title);
+    console.log(selectedMemo.content);
   }
 
   async #deleteMemo() {
     const selectedMemo = await this.#selectMemo(
       "Select the memo you want to delete."
     );
-    return Memo.destroy(selectedMemo["id"]).then(() =>
+    return Memo.destroy(selectedMemo.id).then(() =>
       console.log("The memo was successfully deleted.")
     );
   }
@@ -123,6 +123,6 @@ export default class MemoApp {
     };
 
     const answer = await enquirer.prompt(question);
-    return answer["value"];
+    return answer.value;
   }
 }
