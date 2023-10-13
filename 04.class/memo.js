@@ -1,20 +1,37 @@
+import SQLiteAdapter from "./sqlite-adapter.js";
+
 export default class Memo {
-  static createTable(adapter) {
-    return adapter.run(
+  static #adapter = new SQLiteAdapter();
+
+  static createTable() {
+    return this.#adapter.run(
       "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, content TEXT NOT NULL)"
     );
   }
-  static all(adapter) {
-    return adapter.all("SELECT * FROM memos ORDER BY id ASC");
+
+  static all() {
+    return this.#adapter.all("SELECT * FROM memos ORDER BY id ASC");
   }
 
-  static destroy(adapter, id) {
-    return adapter.run("DELETE FROM memos WHERE id = ?", id);
+  static destroy(id) {
+    return this.#adapter.run("DELETE FROM memos WHERE id = ?", id);
   }
 
-  static async count(adapter) {
-    const result = await adapter.get("SELECT COUNT(*) FROM memos");
+  static async count() {
+    const result = await this.#adapter.get("SELECT COUNT(*) FROM memos");
     return result["COUNT(*)"];
+  }
+
+  static async save(title, content) {
+    return this.#adapter.run(
+      "INSERT INTO memos(title, content) VALUES(?, ?)",
+      title,
+      content
+    );
+  }
+
+  static async close() {
+    return this.#adapter.close();
   }
 
   #title;
@@ -25,11 +42,7 @@ export default class Memo {
     this.#content = content;
   }
 
-  save(adapter) {
-    return adapter.run(
-      "INSERT INTO memos(title, content) VALUES(?, ?)",
-      this.#title,
-      this.#content
-    );
+  save() {
+    return Memo.save(this.#title, this.#content);
   }
 }

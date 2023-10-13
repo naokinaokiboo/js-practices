@@ -3,16 +3,13 @@ import readline from "readline";
 import minimist from "minimist";
 import enquirer from "enquirer";
 import Memo from "./memo.js";
-import SQLiteAdapter from "./sqlite-adapter.js";
 
 export default class MemoApp {
-  #adapter;
   #optionList;
   #optionReference;
   #optionDelete;
 
   constructor() {
-    this.#adapter = new SQLiteAdapter();
     const args = minimist(process.argv.slice(2));
     this.#optionList = args.l;
     this.#optionReference = args.r;
@@ -30,12 +27,12 @@ export default class MemoApp {
         throw err;
       }
     } finally {
-      await this.#adapter.close();
+      await Memo.close();
     }
   }
 
   #prepareDB() {
-    Memo.createTable;
+    return Memo.createTable();
   }
 
   async #executeCommand() {
@@ -43,7 +40,7 @@ export default class MemoApp {
       return this.#saveMemo();
     }
 
-    const numOfMemos = await Memo.count(this.#adapter);
+    const numOfMemos = await Memo.count();
     if (numOfMemos === 0) {
       console.log("No memos have been registered.");
       return;
@@ -62,7 +59,7 @@ export default class MemoApp {
     const lines = await this.#readlinePromise();
     const memo = new Memo(lines[0], lines.slice(1).join("\n"));
     return memo
-      .save(this.#adapter)
+      .save()
       .then(() => console.log("The memo was successfully saved."));
   }
 
@@ -84,7 +81,7 @@ export default class MemoApp {
   }
 
   async #showAllTitles() {
-    const memos = await Memo.all(this.#adapter);
+    const memos = await Memo.all();
     for (const memo of memos) {
       console.log(memo["title"]);
     }
@@ -102,13 +99,13 @@ export default class MemoApp {
     const selectedMemo = await this.#selectMemo(
       "Select the memo you want to delete."
     );
-    return Memo.destroy(this.#adapter, selectedMemo["id"]).then(() =>
+    return Memo.destroy(selectedMemo["id"]).then(() =>
       console.log("The memo was successfully deleted.")
     );
   }
 
   async #selectMemo(msg) {
-    const memos = await Memo.all(this.#adapter);
+    const memos = await Memo.all();
     const question = {
       type: "select",
       name: "value",
