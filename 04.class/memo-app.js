@@ -110,13 +110,11 @@ export default class MemoApp {
       type: "select",
       name: "value",
       message: msg,
-      choices: memos.map((memo) => {
-        return {
-          name: memo.title,
-          message: memo.title,
-          value: { id: memo.id, title: memo.title, content: memo.content },
-        };
-      }),
+      choices: memos.map((memo) => ({
+        name: memo.title,
+        message: memo.title,
+        value: memo,
+      })),
       result() {
         return this.focused.value;
       },
