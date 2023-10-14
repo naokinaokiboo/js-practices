@@ -69,8 +69,8 @@ export default class MemoApp {
       input: process.stdin,
     });
 
-    const lines = [];
     return new Promise((resolve) => {
+      const lines = [];
       reader.on("line", (line) => {
         lines.push(line);
       });
