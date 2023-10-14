@@ -92,7 +92,9 @@ export default class MemoApp {
       "Select the memo you want to display."
     );
     console.log(selectedMemo.title);
-    console.log(selectedMemo.content);
+    if (selectedMemo.content) {
+      console.log(selectedMemo.content);
+    }
   }
 
   async #deleteMemo() {
