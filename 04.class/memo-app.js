@@ -37,7 +37,8 @@ export default class MemoApp {
 
   async #executeCommand() {
     if (!this.#optionList && !this.#optionReference && !this.#optionDelete) {
-      return this.#saveMemo();
+      await this.#saveMemo();
+      return;
     }
 
     const numOfMemos = await Memo.count();
@@ -47,11 +48,11 @@ export default class MemoApp {
     }
 
     if (this.#optionList) {
-      return this.#showTitleList();
+      await this.#showTitleList();
     } else if (this.#optionReference) {
-      return this.#referenceMemo();
+      await this.#referenceMemo();
     } else if (this.#optionDelete) {
-      return this.#deleteMemo();
+      await this.#deleteMemo();
     }
   }
 
