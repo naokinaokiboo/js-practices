@@ -56,14 +56,14 @@ export default class MemoApp {
   }
 
   async #saveMemo() {
-    const lines = await this.#readlinePromise();
+    const lines = await this.#receiveInput();
     const memo = new Memo(lines);
     return memo
       .save()
       .then(() => console.log("The memo was successfully saved."));
   }
 
-  #readlinePromise() {
+  #receiveInput() {
     console.log("Enter your memo. (Press Ctrl+D to finish typing).");
     const reader = readline.createInterface({
       input: process.stdin,
