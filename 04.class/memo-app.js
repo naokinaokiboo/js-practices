@@ -18,7 +18,7 @@ export default class MemoApp {
 
   async execute() {
     try {
-      await this.#prepareDB();
+      await Memo.createTable();
       await this.#executeCommand();
     } catch (err) {
       if (err instanceof Error) {
@@ -29,10 +29,6 @@ export default class MemoApp {
     } finally {
       await Memo.close();
     }
-  }
-
-  #prepareDB() {
-    return Memo.createTable();
   }
 
   async #executeCommand() {
