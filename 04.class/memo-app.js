@@ -54,6 +54,10 @@ export default class MemoApp {
 
   async #saveMemo() {
     const lines = await this.#receiveInput();
+    if (lines.length === 0) {
+      console.log("To register a memo, you must enter some text.");
+      return;
+    }
     const memo = new Memo(lines);
     await memo.save();
     console.log("The memo was successfully saved.");
