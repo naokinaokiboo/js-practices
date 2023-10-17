@@ -58,9 +58,8 @@ export default class MemoApp {
   async #saveMemo() {
     const lines = await this.#receiveInput();
     const memo = new Memo(lines);
-    return memo
-      .save()
-      .then(() => console.log("The memo was successfully saved."));
+    await memo.save();
+    console.log("The memo was successfully saved.");
   }
 
   #receiveInput() {
@@ -101,9 +100,8 @@ export default class MemoApp {
     const selectedMemo = await this.#selectMemo(
       "Select the memo you want to delete."
     );
-    return Memo.destroy(selectedMemo.id).then(() =>
-      console.log("The memo was successfully deleted.")
-    );
+    await Memo.destroy(selectedMemo.id);
+    console.log("The memo was successfully deleted.");
   }
 
   async #selectMemo(msg) {
