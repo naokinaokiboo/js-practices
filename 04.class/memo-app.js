@@ -91,10 +91,7 @@ export default class MemoApp {
     const selectedMemo = await this.#selectMemo(
       "Select the memo you want to display."
     );
-    console.log(selectedMemo.title);
-    if (selectedMemo.content) {
-      console.log(selectedMemo.content);
-    }
+    console.log(selectedMemo.content);
   }
 
   async #deleteMemo() {
