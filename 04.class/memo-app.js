@@ -105,12 +105,12 @@ export default class MemoApp {
     console.log("The memo was successfully deleted.");
   }
 
-  async #selectMemo(msg) {
+  async #selectMemo(promptMessage) {
     const memos = await Memo.all();
     const question = {
       type: "select",
       name: "value",
-      message: msg,
+      message: promptMessage,
       choices: memos.map((memo) => ({
         name: memo.title,
         message: memo.title,
