@@ -22,7 +22,7 @@ export default class Memo {
     return result["COUNT(*)"];
   }
 
-  static async save(title, content) {
+  static save(title, content) {
     return this.#adapter.run(
       "INSERT INTO memos(title, content) VALUES(?, ?)",
       title,
@@ -30,7 +30,7 @@ export default class Memo {
     );
   }
 
-  static async close() {
+  static close() {
     return this.#adapter.close();
   }
 
