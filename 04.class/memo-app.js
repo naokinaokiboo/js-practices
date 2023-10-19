@@ -98,7 +98,7 @@ export default class MemoApp {
     const selectedMemo = await this.#selectMemo(
       "Select the memo you want to delete."
     );
-    await Memo.destroy(selectedMemo.id);
+    await selectedMemo.destroy();
     console.log("The memo was successfully deleted.");
   }
 

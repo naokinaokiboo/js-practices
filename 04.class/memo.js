@@ -9,12 +9,11 @@ export default class Memo {
     );
   }
 
-  static all() {
-    return this.#adapter.all("SELECT * FROM memos ORDER BY id ASC");
-  }
-
-  static destroy(id) {
-    return this.#adapter.run("DELETE FROM memos WHERE id = ?", id);
+  static async all() {
+    const memos = await this.#adapter.all(
+      "SELECT * FROM memos ORDER BY id ASC"
+    );
+    return memos.map((memo) => new Memo(memo.content, memo.id));
   }
 
   static async count() {
@@ -22,7 +21,11 @@ export default class Memo {
     return result["COUNT(*)"];
   }
 
-  static save(title, content) {
+  static close() {
+    return this.#adapter.close();
+  }
+
+  static #save(title, content) {
     return this.#adapter.run(
       "INSERT INTO memos(title, content) VALUES(?, ?)",
       title,
@@ -30,19 +33,42 @@ export default class Memo {
     );
   }
 
-  static close() {
-    return this.#adapter.close();
+  static #destroy(id) {
+    return this.#adapter.run("DELETE FROM memos WHERE id = ?", id);
   }
 
+  #id;
   #title;
   #content;
 
-  constructor(lines) {
-    this.#title = lines[0];
-    this.#content = lines.join("\n");
+  constructor(content, id = null) {
+    this.#id = id;
+    if (id === null) {
+      this.#title = content[0];
+      this.#content = content.join("\n");
+    } else {
+      const firstNewlineIndex = content.indexOf("\n");
+      this.#title =
+        firstNewlineIndex === -1
+          ? content
+          : content.slice(0, firstNewlineIndex);
+      this.#content = content;
+    }
   }
 
   save() {
-    return Memo.save(this.#title, this.#content);
+    return Memo.#save(this.#title, this.#content);
+  }
+
+  destroy() {
+    return Memo.#destroy(this.#id);
+  }
+
+  get title() {
+    return this.#title;
+  }
+
+  get content() {
+    return this.#content;
   }
 }
