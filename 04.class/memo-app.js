@@ -121,13 +121,12 @@ export default class MemoApp {
       },
     };
 
-    let answer;
     try {
-      answer = await enquirer.prompt(question);
+      const answer = await enquirer.prompt(question);
+      return answer.value;
     } catch (error) {
       console.error("An unexpected error occurred.");
       process.exit(1);
     }
-    return answer.value;
   }
 }
