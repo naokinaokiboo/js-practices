@@ -5,7 +5,7 @@ export default class Memo {
 
   static createTable() {
     return this.#adapter.run(
-      "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, content TEXT NOT NULL)"
+      "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY AUTOINCREMENT, content TEXT NOT NULL)"
     );
   }
 
@@ -25,12 +25,8 @@ export default class Memo {
     return this.#adapter.close();
   }
 
-  static #save(title, content) {
-    return this.#adapter.run(
-      "INSERT INTO memos(title, content) VALUES(?, ?)",
-      title,
-      content
-    );
+  static #save(content) {
+    return this.#adapter.run("INSERT INTO memos(content) VALUES(?)", content);
   }
 
   static #destroy(id) {
@@ -38,26 +34,19 @@ export default class Memo {
   }
 
   #id;
-  #title;
   #content;
 
   constructor(content, id = null) {
     this.#id = id;
     if (id === null) {
-      this.#title = content[0];
       this.#content = content.join("\n");
     } else {
-      const firstNewlineIndex = content.indexOf("\n");
-      this.#title =
-        firstNewlineIndex === -1
-          ? content
-          : content.slice(0, firstNewlineIndex);
       this.#content = content;
     }
   }
 
   save() {
-    return Memo.#save(this.#title, this.#content);
+    return Memo.#save(this.#content);
   }
 
   destroy() {
@@ -65,7 +54,10 @@ export default class Memo {
   }
 
   get title() {
-    return this.#title;
+    const firstNewlineIndex = this.#content.indexOf("\n");
+    return firstNewlineIndex === -1
+      ? this.#content
+      : this.#content.slice(0, firstNewlineIndex);
   }
 
   get content() {
