@@ -38,11 +38,7 @@ export default class Memo {
 
   constructor(content, id = null) {
     this.#id = id;
-    if (id === null) {
-      this.#content = content.join("\n");
-    } else {
-      this.#content = content;
-    }
+    this.#content = content;
   }
 
   save() {
