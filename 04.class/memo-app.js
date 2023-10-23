@@ -54,14 +54,7 @@ export default class MemoApp {
   }
 
   async #saveMemo() {
-    let lines;
-    try {
-      lines = await this.#receiveInput();
-    } catch (error) {
-      console.error("An unexpected error occurred during input reception.");
-      process.exit(1);
-    }
-
+    const lines = await this.#receiveInput();
     if (lines.length === 0) {
       console.log("To register a memo, you must enter some text.");
       return;
@@ -75,16 +68,13 @@ export default class MemoApp {
     const reader = readline.createInterface({
       input: process.stdin,
     });
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const lines = [];
       reader.on("line", (line) => {
         lines.push(line);
       });
       reader.on("close", () => {
         resolve(lines);
-      });
-      reader.on("error", (error) => {
-        reject(error);
       });
     });
   }
