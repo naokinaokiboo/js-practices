@@ -3,6 +3,7 @@ import readline from "readline";
 import minimist from "minimist";
 import enquirer from "enquirer";
 import Memo from "./memo.js";
+import MemoDataAccessor from "./memo-data-accessor.js";
 
 export default class MemoApp {
   #optionList;
@@ -18,7 +19,7 @@ export default class MemoApp {
 
   async execute() {
     try {
-      await Memo.createTable();
+      await MemoDataAccessor.createTable();
       await this.#executeCommand();
     } catch (err) {
       if (err instanceof Error) {
@@ -27,7 +28,7 @@ export default class MemoApp {
         throw err;
       }
     } finally {
-      await Memo.close();
+      await MemoDataAccessor.close();
     }
   }
 
@@ -37,7 +38,7 @@ export default class MemoApp {
       return;
     }
 
-    const numOfMemos = await Memo.count();
+    const numOfMemos = await MemoDataAccessor.count();
     if (numOfMemos === 0) {
       console.log("No memos have been registered.");
       return;
@@ -65,8 +66,7 @@ export default class MemoApp {
       console.log("To register a memo, you must enter some text.");
       return;
     }
-    const memo = new Memo(lines);
-    await memo.save();
+    await MemoDataAccessor.save(lines.join("\n"));
     console.log("The memo was successfully saved.");
   }
 
@@ -90,7 +90,7 @@ export default class MemoApp {
   }
 
   async #showTitleList() {
-    const memos = await Memo.all();
+    const memos = await MemoDataAccessor.all();
     for (const memo of memos) {
       console.log(memo.title);
     }
@@ -112,7 +112,7 @@ export default class MemoApp {
   }
 
   async #selectMemo(promptMessage) {
-    const memos = await Memo.all();
+    const memos = await MemoDataAccessor.all();
     const question = {
       type: "select",
       name: "value",
