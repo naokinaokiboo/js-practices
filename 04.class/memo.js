@@ -1,11 +1,15 @@
-//import SQLiteAdapter from "./sqlite-adapter.js";
-
 export default class Memo {
+  static createMemo(id, content) {
+    const memo = new Memo(content);
+    memo.#id = id;
+    return memo;
+  }
+
   #id;
   #content;
 
-  constructor(id, content) {
-    this.#id = id;
+  constructor(content) {
+    this.#id = null;
     this.#content = content;
   }
 

@@ -59,7 +59,8 @@ export default class MemoApp {
       console.log("To register a memo, you must enter some text.");
       return;
     }
-    await MemoDataAccessor.save(lines.join("\n"));
+    const memo = new Memo(lines.join("\n"));
+    await MemoDataAccessor.save(memo);
     console.log("The memo was successfully saved.");
   }
 
@@ -97,7 +98,7 @@ export default class MemoApp {
     const selectedMemo = await this.#selectMemo(
       "Select the memo you want to delete."
     );
-    await selectedMemo.destroy();
+    await MemoDataAccessor.destroy(selectedMemo.id);
     console.log("The memo was successfully deleted.");
   }
 

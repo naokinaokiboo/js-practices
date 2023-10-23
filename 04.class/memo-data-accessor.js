@@ -14,7 +14,7 @@ export default class MemoDataAccessor {
     const memos = await this.#adapter.all(
       "SELECT * FROM memos ORDER BY id ASC"
     );
-    return memos.map((memo) => new Memo(memo.id, memo.content));
+    return memos.map((memo) => Memo.createMemo(memo.id, memo.content));
   }
 
   static async count() {
@@ -26,8 +26,11 @@ export default class MemoDataAccessor {
     return this.#adapter.close();
   }
 
-  static save(content) {
-    return this.#adapter.run("INSERT INTO memos(content) VALUES(?)", content);
+  static save(memo) {
+    return this.#adapter.run(
+      "INSERT INTO memos(content) VALUES(?)",
+      memo.content
+    );
   }
 
   static destroy(id) {
