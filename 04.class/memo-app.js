@@ -61,7 +61,7 @@ export default class MemoApp {
       console.log("To register a memo, you must enter some text.");
       return;
     }
-    const memo = new Memo(lines.join("\n"));
+    const memo = new Memo({ content: lines.join("\n") });
     await this.#memoDataAccessor.save(memo);
     console.log("The memo was successfully saved.");
   }

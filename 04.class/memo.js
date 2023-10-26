@@ -1,15 +1,9 @@
 export default class Memo {
-  static createMemo(id, content) {
-    const memo = new Memo(content);
-    memo.#id = id;
-    return memo;
-  }
-
   #id;
   #content;
 
-  constructor(content) {
-    this.#id = null;
+  constructor({ id, content }) {
+    this.#id = id;
     this.#content = content;
   }
 
