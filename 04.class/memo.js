@@ -18,10 +18,7 @@ export default class Memo {
   }
 
   get title() {
-    const firstNewlineIndex = this.#content.indexOf("\n");
-    return firstNewlineIndex === -1
-      ? this.#content
-      : this.#content.slice(0, firstNewlineIndex);
+    return this.#content.split("\n")[0];
   }
 
   get content() {
