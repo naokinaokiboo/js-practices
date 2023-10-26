@@ -6,11 +6,13 @@ import Memo from "./memo.js";
 import MemoDataAccessor from "./memo-data-accessor.js";
 
 export default class MemoApp {
+  #memoDataAccessor;
   #optionList;
   #optionReference;
   #optionDelete;
 
   constructor() {
+    this.#memoDataAccessor = new MemoDataAccessor();
     const args = minimist(process.argv.slice(2));
     this.#optionList = args.l;
     this.#optionReference = args.r;
@@ -19,7 +21,7 @@ export default class MemoApp {
 
   async execute() {
     try {
-      await MemoDataAccessor.createTable();
+      await this.#memoDataAccessor.createTable();
       await this.#executeCommand();
     } catch (err) {
       if (err instanceof Error) {
@@ -28,7 +30,7 @@ export default class MemoApp {
         throw err;
       }
     } finally {
-      await MemoDataAccessor.close();
+      await this.#memoDataAccessor.close();
     }
   }
 
@@ -38,7 +40,7 @@ export default class MemoApp {
       return;
     }
 
-    const numOfMemos = await MemoDataAccessor.count();
+    const numOfMemos = await this.#memoDataAccessor.count();
     if (numOfMemos === 0) {
       console.log("No memos have been registered.");
       return;
@@ -60,7 +62,7 @@ export default class MemoApp {
       return;
     }
     const memo = new Memo(lines.join("\n"));
-    await MemoDataAccessor.save(memo);
+    await this.#memoDataAccessor.save(memo);
     console.log("The memo was successfully saved.");
   }
 
@@ -81,7 +83,7 @@ export default class MemoApp {
   }
 
   async #showTitleList() {
-    const memos = await MemoDataAccessor.all();
+    const memos = await this.#memoDataAccessor.all();
     for (const memo of memos) {
       console.log(memo.title);
     }
@@ -98,12 +100,12 @@ export default class MemoApp {
     const selectedMemo = await this.#selectMemo(
       "Select the memo you want to delete."
     );
-    await MemoDataAccessor.destroy(selectedMemo.id);
+    await this.#memoDataAccessor.destroy(selectedMemo.id);
     console.log("The memo was successfully deleted.");
   }
 
   async #selectMemo(promptMessage) {
-    const memos = await MemoDataAccessor.all();
+    const memos = await this.#memoDataAccessor.all();
     const question = {
       type: "select",
       name: "value",
