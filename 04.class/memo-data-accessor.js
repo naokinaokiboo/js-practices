@@ -18,9 +18,7 @@ export default class MemoDataAccessor {
     const memos = await this.#adapter.all(
       "SELECT * FROM memos ORDER BY id ASC"
     );
-    return memos.map(
-      (memo) => new Memo({ id: memo.id, content: memo.content })
-    );
+    return memos.map((memo) => new Memo(memo));
   }
 
   async count() {
